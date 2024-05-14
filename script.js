@@ -1,34 +1,34 @@
-import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+// Define variables for the scene, camera, renderer, and cube
+let scene, camera, renderer, cube;
 
-let camera, scene, renderer, controls;
-
+// Initialize the scene, camera, and renderer
 function init() {
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
     renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
+    document.getElementById('canvas-container').appendChild(renderer.domElement);
 
-    controls = new OrbitControls(camera, renderer.domElement);
-
-    const spacecraft = new THREE.Mesh(
-        new THREE.BoxGeometry(1, 1, 1),
-        new THREE.MeshBasicMaterial({ color: 0xff0000 })
-    );
-    scene.add(spacecraft);
-
-    // Create planets and add them to the scene
+    // Create a cube geometry and material
+    const geometry = new THREE.BoxGeometry();
+    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    cube = new THREE.Mesh(geometry, material);
+    scene.add(cube);
 
     camera.position.z = 5;
-
-    animate();
 }
 
+// Animate the cube
 function animate() {
     requestAnimationFrame(animate);
+
+    cube.rotation.x += 0.01;
+    cube.rotation.y += 0.01;
+
     renderer.render(scene, camera);
 }
 
+// Call the init function to set up the scene and start the animation
 init();
 animate();
